@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% block title %} Login - {% endblock title %}
+{% block body %}
+
+      <form action="{{ url_for('login') }}" method="post" class="loginform">
+        <h1 style="color: rgb(0, 0, 0); font-family:Georgia, 'Times New Roman', Times, serif;">Login</h1>
+        <div class="fillups" id="fillup1">
+          <input type="text" name="username" class="inputs" placeholder="Username"/>
+        </div>
+        <br />
+        <div class="fillups">
+          <input type="password" name="password" class="inputs" placeholder="Password"/>
+        </div>
+        <br />
+        <input type="submit" value="Login" class="button" />
+      </form>
+  
+{% endblock body %}
+      

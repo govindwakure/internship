@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block title %} Register- {% endblock title %}
+{% block body %}
+
+    <form action="{{ url_for('register') }}" method="post" class="registerform">
+        <h1 style="color: rgb(0, 0, 0);font-family:Georgia, 'Times New Roman', Times, serif;">Sign Up</h1>
+        <input type="number" placeholder="PRN number" name="prn_number" class="inputs">
+        <input type="submit" value="Register" class="button">
+    </form>
+    
+{% endblock body %}
+    

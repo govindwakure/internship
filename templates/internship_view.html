@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='internship_view.css') }}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="demo-content">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+    <div class="internship-view">
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <td>{{ student.name }}</td>
+                <th>Academic Year:</th>
+                <td>{{ internship.year }}</td>
+                <th>Status</th>
+                <td>{{ internship.status }}</td>
+            </tr>
+            <tr>
+                <th>Class</th>
+                <td>{{ internship.std_class }}</td>
+                <th>Email</th>
+                <td colspan="4">{{ student.email }}</td>
+            </tr>
+            <tr>
+                <th>Organization</th>
+                <td>{{ internship.organization }}</td>
+                <th>Mode</th>
+                <td colspan="4">{{ internship.mode }}</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td>{{ internship.duration }} Weeks</td>
+                <th>Start Date</th>
+                <td>{{ internship.start_date }}</td>
+                <th>End Date</th>
+                <td>{{ internship.end_date }}</td>
+            </tr>
+            <tr>
+                <th>Work Days</th>
+                <td>{{ internship.days }}</td>
+                <th>Work time</th>
+                <td colspan="4">{{ internship.work_time }}</td>
+            </tr>
+
+            <tr>
+                <th>Offer Letter</th>
+                <td>
+                    {% if has_offer_letter %}
+                    <a href="{{ url_for('incharge.view_offer_letter') }}">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+                <th>Completion Certificate</th>
+                <td colspan="4">
+                    {% if has_certificate %}
+                    <a href="{{ url_for('incharge.view_certificate') }}">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Report</th>
+                <td>
+                    {% if has_report %}
+                    <a href="{{ url_for('incharge.view_report') }}">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+                <th>Feedback</th>
+                <td colspan="4">
+                    {% if has_feedback %}
+                    <a href="{{ url_for('incharge.view_feedback') }}">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+    <div class="decision">
+        {% if not is_acknowledged %}
+    <form method="POST" action="{{ url_for('incharge.approve') }}">
+        <input type="submit" class="iconic-button" name="action" value="Approve">
+    </form>
+    <form method="POST" action="{{ url_for('incharge.reject') }}">
+        <div id="rejection_reason" name="rejection_reason" style="display: none;">
+            {% for reason in reasons_to_reject %}
+            <label>
+                <input type="radio" name="choice" value="{{ reason }}"> {{ reason }}
+            </label>
+            {% endfor %}
+        </div>
+        <button type="button" id="rejection_btn" onclick="showRejectionReason()">Reject</button>
+        <input type="submit" name="action" value="Reject" id="submitButton" style="display: none;">
+    </form>
+    {% endif %}
+    </div>
+</div>
+
+</body>
+
+<script>
+    function showRejectionReason() {
+        document.getElementById('rejection_reason').style.display = 'block'; 
+        document.getElementById('rejection_btn').style.display= 'none';
+        document.getElementById('submitButton').style.display = 'block';
+        document.getElementById('rejectButton').disabled = true;
+    }
+</script>
+
+</html>

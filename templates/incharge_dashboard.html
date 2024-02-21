@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'incharge_dashboard.css') }}">
+</head>
+<body>
+    
+    <div class="demo-content">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+    <nav>
+        <ul class="menu">
+            <div class="dropdown">
+            <li class="reports-nav">
+                <a href="{{ url_for('report.report_filters') }}" >Reports</a>
+                <ul class="sub-menu-1">
+                    <li>
+                        <a href="{{ url_for('report.accademic_year_report') }}">Accademic Year</a>
+                    </li>
+                    <li>
+                       <a href="">Last Three Years</a>
+                    </li>
+                    <div class="sub-dropdown">
+                        <li >
+                            <a href="" class="internship-types-nav">Internship Types</a>
+                           <ul class="sub-menu-2">
+                               <li>In-House</li>
+                               <li>Out-House</li>
+                           </ul>
+                       </li>
+                    </div>
+                    <div class="sub-dropdown-1">
+                        <li>
+                            <a href="#" class="summary-nav">Summary</a> 
+                            <ul class="sub-menu-3">
+                                <li><a href="{{ url_for('report.year_end_summary_report') }}">Yearly</a></li>
+                                <li><a href="{{ url_for('report.students_report') }}">Student</a> </li>
+                                <li><a href="{{ url_for('report.company_report') }}">Company</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                </ul>
+            </li>
+            </div>
+            <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
+            <form action="{{ url_for('incharge.logout') }}" method="get" class="logout">
+                <button type="submit" class="button">Logout</button>
+            </form>
+        </ul>
+    </nav>
+    
+    <h3>Pending Requests</h3>
+
+    <table id="pending-internships-table">
+        
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Internship Organization</th>
+            <th>Duration</th>
+            <th>Start and End Dates</th>
+            <th>Working Days</th>
+            <th>Working Hours</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        {% for item in data %}
+        {% if item.is_pending %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.internship.std_class }}</td>
+            <td>{{ item.internship.organization }}</td>
+            <td>{{ item.internship.duration }}</td>
+            <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
+            <td>{{ item.internship.days }}</td>
+            <td>{{ item.internship.work_time }}</td>
+            <td>{{ item.internship.status }}</td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+        </tr>     
+        
+        {% endif %}
+        {% endfor %}
+    </table>
+
+
+    <h3>Acknowledged Internships</h3>
+    <table id="acknowledged-internships-table">
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Internship Organization</th>
+            <th>Start and End Dates</th>
+            <th>Working Days</th>
+            <th>Working Hours</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        
+        {% for item in data %}
+        {% if item.is_approved or item.is_rejected %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.internship.std_class }}</td>
+            <td>{{ item.internship.organization }}</td>
+            <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
+            <td>{{ item.internship.days }}</td>
+            <td>{{ item.internship.work_time }}</td>
+            <td>{{ item.internship.status }}</td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <h3>Completed Internships</h3>
+    <table id="acknowledged-internships-table">
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Internship Organization</th>
+            <th>Start and End Dates</th>
+            <th>Working Days</th>
+            <th>Working Hours</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        
+        {% for item in data %}
+        {% if item.is_completed %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.internship.std_class }}</td>
+            <td>{{ item.internship.organization }}</td>
+            <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
+            <td>{{ item.internship.days }}</td>
+            <td>{{ item.internship.work_time }}</td>
+            <td>{{ item.internship.status }}</td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
